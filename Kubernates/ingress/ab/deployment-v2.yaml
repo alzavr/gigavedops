@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: demo
+        version: v2
+    spec:
+      containers:
+      - name: app
+        image: nginx
+        volumeMounts:
+        - name: html
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html
+        configMap:
+          name: app-v2-cm
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-v2-cm
+data:
+  index.html: |
+    <h1>Welcome to v2!</h1>
