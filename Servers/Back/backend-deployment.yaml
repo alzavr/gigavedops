@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-api
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend-api
+          image: backend-go-service:1.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 8080
+
+          env:
+            - name: CONFIG_PATH
+              value: /etc/backend-api/config.yaml
+
+          envFrom:
+            - secretRef:
+                name: backend-secret
+
+          volumeMounts:
+            - name: backend-config
+              mountPath: /etc/backend-api
+              readOnly: true
+
+      volumes:
+        - name: backend-config
+          configMap:
+            name: backend-config

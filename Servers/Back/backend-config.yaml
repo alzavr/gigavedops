@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  config.yaml: |
+    database:
+      host: postgres
+      port: "5432"
+      dbname: test
+      sslmode: disable
