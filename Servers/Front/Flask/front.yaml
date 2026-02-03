@@ -14,6 +14,7 @@ spec:
       labels:
         app: frontend
     spec:
+      serviceAccountName: sa-frontend    
       containers:
         - name: frontend-api
           image: flask-frontend:1.0

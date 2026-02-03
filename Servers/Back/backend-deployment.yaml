@@ -14,6 +14,7 @@ spec:
       labels:
         app: backend
     spec:
+      serviceAccountName: sa-backend
       containers:
         - name: backend-api
           image: backend-go-service:1.0
